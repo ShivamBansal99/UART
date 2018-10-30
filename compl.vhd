@@ -123,6 +123,7 @@ timing_circuit: entity work.timing_circuit(Behavioral) port map(
     enb=>enb 
     ) ;
 memory: ENTITY WORK.memory(Behavioral) PORT MAP(
+    reset=>reset,
     dina=>rx_data ,
     doutb=>tx_data,
     addra=>addra,
@@ -131,51 +132,51 @@ memory: ENTITY WORK.memory(Behavioral) PORT MAP(
     clk=>rxclk,
     wea=>wea
 );
-process(txclk)
-begin 
-co<=co+1 ;
-end process ;
-process(txclk)
-begin
-    case co is
-    when 0 =>
-        Anode_Activate <= "0111"; 
-        -- activate LED1 and Deactivate LED2, LED3, LED4
-        ledo <= addrb;
-        -- the first hex digit of the 16-bit number
-    when 1 =>
-        Anode_Activate <= "1011"; 
-        -- activate LED2 and Deactivate LED1, LED3, LED4
-        ledo <= addrb;
-        -- the second hex digit of the 16-bit number
-    when 2 =>
-        Anode_Activate <= "1101"; 
-        -- activate LED3 and Deactivate LED2, LED1, LED4
-        ledo <= addrb;
-        -- the third hex digit of the 16-bit number
-    when 3 =>
-        Anode_Activate <= "1110"; 
-        -- activate LED4 and Deactivate LED2, LED3, LED1
-        ledo <= addrb;
-        -- the fourth hex digit of the 16-bit number    
-    end case;
-end process;
-LED_out<="0000001" when ledo=0 else
-     "1001111" when ledo=1 else
-     "0010010" when ledo=2 else
-     "0000110" when ledo=3 else
-     "1001100" when ledo=4 else
-     "0100100" when ledo=5 else
-     "0100000" when ledo=6 else
-     "0001111" when ledo=7 else
-     "0000000" when ledo=8 else
-          "0000100" when ledo=9 else
-          "0000010" when ledo=10 else
-          "1100000" when ledo=11 else
-          "0110001" when ledo=12 else
-          "1000010" when ledo=13 else
-          "0110000" when ledo=14 else
-          "0111000"  ;
+--process(txclk)
+--begin 
+--co<=co+1 ;
+--end process ;
+--process(txclk)
+--begin
+ --   case co is
+ -- when 0 =>
+ --       Anode_Activate <= "0111"; 
+ --       -- activate LED1 and Deactivate LED2, LED3, LED4
+ --       ledo <= addrb;
+ --       -- the first hex digit of the 16-bit number
+ --   when 1 =>
+ --      Anode_Activate <= "1011"; 
+ --       -- activate LED2 and Deactivate LED1, LED3, LED4
+ --       ledo <= addrb;
+ --       -- the second hex digit of the 16-bit number
+ --   when 2 =>
+ --       Anode_Activate <= "1101"; 
+ --       -- activate LED3 and Deactivate LED2, LED1, LED4
+ --       ledo <= addrb;
+ --       -- the third hex digit of the 16-bit number
+ --   when 3 =>
+ --       Anode_Activate <= "1110"; 
+ --       -- activate LED4 and Deactivate LED2, LED3, LED1
+ --       ledo <= addrb;
+ --       -- the fourth hex digit of the 16-bit number    
+ --   end case;
+--end process;
+--LED_out<="0000001" when ledo=0 else
+--     "1001111" when ledo=1 else
+--     "0010010" when ledo=2 else
+--     "0000110" when ledo=3 else
+--     "1001100" when ledo=4 else
+--     "0100100" when ledo=5 else
+--     "0100000" when ledo=6 else
+--     "0001111" when ledo=7 else
+--     "0000000" when ledo=8 else
+--          "0000100" when ledo=9 else
+--          "0000010" when ledo=10 else
+--          "1100000" when ledo=11 else
+--          "0110001" when ledo=12 else
+--          "1000010" when ledo=13 else
+--          "0110000" when ledo=14 else
+--          "0111000"  ;
         
 
 led<=rx_data ;

@@ -111,7 +111,7 @@ else
              uld<='0' ;
              addra<=addra1 ;    
         end if;
-        if(tx_empty='1' and ld='0' and recieve<16 )then
+        if(tx_empty='1' and ld='0' and recieve<16 and addra1/=addrb1)then
             ld_tx<='1';
             ld<='1';
             addrb1<=addrb1+1;

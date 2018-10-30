@@ -34,6 +34,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity memory is
  Port (
+ reset:in std_logic;
  dina:in std_logic_vector(7 downto 0); 
  doutb:out std_logic_vector(7 downto 0);
  addra:in integer range 0 to 15; 
@@ -52,17 +53,19 @@ begin
 process(clk)
 begin
 if(rising_edge(clk))then
-if(wea='1')then
-ab<=addra*8;
-e(ab)<=dina(0);
-e(ab+1)<=dina(1);
-e(ab+2)<=dina(2);
-e(ab+3)<=dina(3);
-e(ab+4)<=dina(4);
-e(ab+5)<=dina(5);
-e(ab+6)<=dina(6);
-e(ab+7)<=dina(7);
-
+if reset='1' then
+    e<="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+else if(wea='1')then
+        ab<=addra*8;
+        e(ab)<=dina(0);
+        e(ab+1)<=dina(1);
+        e(ab+2)<=dina(2);
+        e(ab+3)<=dina(3);
+        e(ab+4)<=dina(4);
+        e(ab+5)<=dina(5);
+        e(ab+6)<=dina(6);
+        e(ab+7)<=dina(7);
+      end if;
 end if;
 end if;
 end process;
