@@ -65,6 +65,7 @@ rx_empty <= empty;
 --dummy2 <= dummy;
 process(rxclk)
     begin
+    if(rising_edge(rxclk)) then
         if(reset = '1') then
             rx_data <= "00000000";
             empty <= '1';
@@ -74,9 +75,8 @@ process(rxclk)
             ctr8 <= "0000";
             ctr16 <= "0000";
        
-        
-       elsif(rxclk = '0' and rxclk'event) then
-            if(rx_in = '0' and rx_en = '1' and dummy ='0') then
+            
+       else if(rx_in = '0' and rx_en = '1' and dummy ='0') then
                 ctr8 <= ctr8 + 1;
             else 
                 ctr8 <= "0000";
@@ -121,7 +121,8 @@ process(rxclk)
                 empty <= '1';
 --                storage <= "00000000";
             end if;
-        end if;  
+        end if; 
+     end if ; 
     end process;                
    -- ctr<= counter;            
 end Behavioral;

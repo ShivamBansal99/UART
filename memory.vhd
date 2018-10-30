@@ -49,9 +49,9 @@ signal e:std_logic_vector(127 downto 0);
 signal ab:integer range 0 to 127;
 signal cd:integer range 0 to 127;
 begin
-process(clk,wea,addra)
+process(clk)
 begin
-if(clk='1'and clk'event)then
+if(rising_edge(clk))then
 if(wea='1')then
 ab<=addra*8;
 e(ab)<=dina(0);
@@ -66,9 +66,9 @@ e(ab+7)<=dina(7);
 end if;
 end if;
 end process;
-process(clk,en,addrb)
+process(clk)
 begin
-if(clk='1'and clk'event)then
+if(rising_edge(clk))then
 if(en='1')then
 cd<=addrb*8;
 doutb(0)<=e(cd);
@@ -79,6 +79,8 @@ doutb(4)<=e(cd+4);
 doutb(5)<=e(cd+5);
 doutb(6)<=e(cd+6);
 doutb(7)<=e(cd+7);
+else doutb<="11111111" ;
+    cd<=0 ;
 end if;
 end if;
 end process;

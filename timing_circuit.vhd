@@ -67,47 +67,62 @@ Port(
     clk: in std_logic;
     uld_rx: out std_logic;
     ld_tx: out std_logic;
-    addra: out integer;
-    addrb: out integer;
+    addra: out integer range 0 to 15;
+    addrb: out integer range 0 to 15;
     wea: out std_logic;
-    enb: out std_logic
+    enb: out std_logic 
 
 );
 end entity;
 
 architecture Behavioral of Timing_Circuit is
 signal done: std_logic:='0';
-signal uld: std_logic:='1';
+signal uld: std_logic:='0';
 signal addra1: integer range 0 to 15:=0;
 signal addrb1: integer range 0 to 15:=0;
+signal ld:StD_LOGIC:= '0' ;
+signal recieve:integer:=0 ;
 begin
-process(clk,reset)
+process(clk)
 begin 
-uld_rx<='0';
-wea<='0' ;
-ld_tx<='0' ;
-enb<='0' ;
+    if(rising_edge(clk)) then
 if(reset='1') then
     uld_rx<='0';
-    ld_tx<='0';
+    uld<='0' ;
+    ld_tx<='1';
+    ld<='1';
     addra<=0;
     addrb<=0;
+    addrb1<=0;
+    addra1<=0;
+    wea<='0' ;
+    enb<='0' ;
 else 
-    if(clk'EVENT AND clk='1') then
-        if(rx_empty='0') then
+
+        if(rx_empty='0' and uld='0') then
             addra1<=addra1+1;
             addra<=addra1;
             wea<='1';
+            uld<='1' ;
             uld_rx<='1';
+            recieve<=0 ;
+        else wea<='0' ;
+             uld_rx<='0' ;
+             uld<='0' ;
+             addra<=addra1 ;    
         end if;
-        if(tx_empty='1' and addrb1<=addra1)then
+        if(tx_empty='1' and ld='0' and recieve<16 )then
             ld_tx<='1';
+            ld<='1';
             addrb1<=addrb1+1;
             addrb<=addrb1;
             enb<='1';
-        else
-            ld_tx<='0';
-            enb<='0';
+            recieve<=recieve+1 ;
+         elsif(tx_empty='0') then
+            ld_tx<='0' ;
+            ld<='0';
+            enb<='0' ;
+            addrb<=addrb1;
         end if;
     end if;
 end if ;
