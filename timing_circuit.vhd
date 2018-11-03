@@ -98,7 +98,6 @@ if(reset='1') then
     wea<='0' ;
     enb<='0' ;
 else 
-
         if(rx_empty='0' and uld='0') then
             addra1<=addra1+1;
             addra<=addra1;
@@ -106,7 +105,7 @@ else
             uld<='1' ;
             uld_rx<='1';
             recieve<=0 ;
-        else wea<='0' ;
+        else wea<='1' ;
              uld_rx<='0' ;
              uld<='0' ;
              addra<=addra1 ;    
