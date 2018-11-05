@@ -67,8 +67,8 @@ Port(
     clk: in std_logic;
     uld_rx: out std_logic;
     ld_tx: out std_logic;
-    addra: out integer range 0 to 15;
-    addrb: out integer range 0 to 15;
+    addra: out integer range 0 to 1919;
+    addrb: out integer range 0 to 1579;
     wea: out std_logic;
     enb: out std_logic 
 
@@ -78,8 +78,8 @@ end entity;
 architecture Behavioral of Timing_Circuit is
 signal done: std_logic:='0';
 signal uld: std_logic:='0';
-signal addra1: integer range 0 to 15:=0;
-signal addrb1: integer range 0 to 15:=0;
+signal addra1: integer range 0 to 1919:=0;
+signal addrb1: integer range 0 to 1579:=0;
 signal ld:StD_LOGIC:= '0' ;
 signal recieve:integer:=0 ;
 begin
@@ -110,7 +110,7 @@ else
              uld<='0' ;
              addra<=addra1 ;    
         end if;
-        if(tx_empty='1' and ld='0' and recieve<16 and addra1/=addrb1)then
+        if(tx_empty='1' and ld='0' and recieve<1580 and addra1/=addrb1)then
             ld_tx<='1';
             ld<='1';
             addrb1<=addrb1+1;
